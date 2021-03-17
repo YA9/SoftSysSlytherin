@@ -3,7 +3,12 @@
 #include <stdlib.h>
 #include <ctype.h>
 #include <unistd.h>
-// #include <mem.h>
+#include "conio/conio.h"
+
+#define UP 0;
+#define DOWN 1;
+#define LEFT 2;
+#define RIGHT 3;
 
 void printToCoordinates(int y, int x, char text[])
 {
@@ -18,7 +23,7 @@ struct coordinate
 };
 
 struct coordinate coordinate;
-// struct coordinate head;
+struct coordinate snake;
 
 struct Node
 {
@@ -27,9 +32,11 @@ struct Node
     struct Node *next;
     struct Node *prev;
     struct Node *head;
+    struct Node *tail;
     // struct Node *tail;
 };
 struct Node *head; /* Global variable - pointer to head node */
+struct Node *tail; /* Global variable - pointer to tail node */
 
 struct Node *getNewNode(int x, int y)
 {
@@ -39,20 +46,22 @@ struct Node *getNewNode(int x, int y)
     (*newNode).prev = NULL;
     (*newNode).next = NULL;
     (*newNode).head = NULL;
-    // (*newNode).tail = NULL;
+    (*newNode).tail = NULL;
     return newNode;
 }
 
 void insertAtHead(int x, int y)
 {
     struct Node *newNode = getNewNode(x, y);
-    if (head == NULL)
+    if (head == NULL && tail == NULL)
     {
         // struct Node *newNode = getNewNode(5, 5);
         head = newNode;
+        tail = newNode;
         return;
     }
     head->prev = newNode;
+    tail->next = newNode;
     (*newNode).next = head;
     head = newNode;
     (*newNode).x = x;
@@ -72,16 +81,21 @@ void insertAtHead(int x, int y)
     // }
 }
 
+void pop()
+{
+    tail = tail->next;
+}
+
 void print()
 {
-    struct Node *temp = head;
+    struct Node *temp = tail;
     // printf("Forward: ");
     while (temp != NULL)
     {
         printToCoordinates(temp->x, temp->y, "*");
         // printf("%d ", temp->x);
-        temp = temp->next;
-        usleep(200000);
+        temp = temp->prev;
+        // usleep(200000);
     }
     // printf("\n");
 }
@@ -97,10 +111,69 @@ int main()
     // int ys[30];
     // printf("x: %d, y: %d\n\n", xs[0], ys[0]);
     // struct Node *newNode = getNewNode(10, 25);
-    insertAtHead(11, 25);
-    insertAtHead(12, 25);
-    insertAtHead(13, 25);
-    insertAtHead(14, 25);
+    insertAtHead(10, 25);
+    insertAtHead(10, 26);
+    insertAtHead(10, 27);
+    char c;
+    int i = 1;
+    while (1)
+    {
+        struct Node *temp = head;
+        if (c_kbhit() != 0)
+        {
+            // printf("click: %c", c_getch());
+            switch (c_getch())
+            {
+            case 'w':
+                c = 'w';
+                break;
+            case 'a':
+                c = 'a';
+                break;
+            case 's':
+                c = 's';
+                break;
+            case 'd':
+                c = 'd';
+                break;
+            }
+        }
+        // printf("THISCHAR: %c", c);
+        switch (c)
+        {
+        case 'w':
+            insertAtHead(temp->x - 1, temp->y);
+            break;
+        case 'a':
+            insertAtHead(temp->x, temp->y - 1);
+            break;
+        case 's':
+            insertAtHead(temp->x + 1, temp->y);
+            break;
+        case 'd':
+            insertAtHead(temp->x, temp->y + 1);
+            break;
+        }
+        i += 1;
+        if (i == 100)
+        {
+            break;
+        }
+        pop();
+        system("clear");
+        load();
+        print();
+        usleep(200000);
+    }
+    // int val;
+    // scanf("input: %i", &val);
+    // printf("\nYou inputted: %i", val);
+    sleep(3);
+    snake.direction = UP;
+    // insertAtHead(11, 25);
+    // insertAtHead(12, 25);
+    // insertAtHead(13, 25);
+    // insertAtHead(14, 25);
 
     print();
 
