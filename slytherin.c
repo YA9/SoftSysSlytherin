@@ -59,13 +59,6 @@ void insertAtHead(int x, int y)
         tail = newNode;
         return;
     }
-    // if (tail->next == head)
-    // {
-
-    //     tail->next = newNode;
-    //     newNode->prev = tail;
-    //     return;
-    // }
     head->prev = newNode;
     // tail->next = newNode;
     (*newNode).next = head;
@@ -78,36 +71,12 @@ void insertAtHead(int x, int y)
     {
         temp = temp->prev;
     }
-
-    // tail = temp;
     tail->next = temp->next;
-    // tail->prev = NULL;
-
-    // struct Node temp = *newNode;
-    // for (int i = 0; i < 30; i++)
-    // {
-    //     xs[i] = temp.x;
-    //     ys[i] = temp.y;
-    //     if (temp.next == NULL)
-    //     {
-    //         return;
-    //     }
-    //     temp = *temp.next;
-    //     // temp.x += 1;
-    // }
 }
 
 void pop()
 {
-    // while (tempy->prev != NULL)
-    // {
-    //     tempy = tempy->prev;
-    // }
-    // // tail = tempy;
-    // tempy->prev = NULL;
-    // tempy = head;
     tail = tail->prev;
-    // tail->prev = NULL;
 }
 
 void print()
@@ -127,8 +96,9 @@ void print()
 int main()
 {
     int length;
+    char score[20];
     system("clear"); /* Clears the terminal */
-    length = 5;
+    length = 0;
     // head.x = 25;
     // head.y = 10;
     // int xs[30];
@@ -165,7 +135,6 @@ int main()
                 break;
             }
         }
-        // printf("THISCHAR: %c", c);
         switch (c)
         {
         case 'w':
@@ -191,45 +160,13 @@ int main()
             break;
         }
         system("clear");
-        load();
         print();
+        load();
+        sprintf(score, "Score: %d", length);
+        printToCoordinates(21, 37, score);
         usleep(200000);
     }
-    // int val;
-    // scanf("input: %i", &val);
-    // printf("\nYou inputted: %i", val);
     sleep(3);
-    snake.direction = UP;
-    // insertAtHead(11, 25);
-    // insertAtHead(12, 25);
-    // insertAtHead(13, 25);
-    // insertAtHead(14, 25);
-
-    // print();
-
-    // struct Node temp = *newNode;
-    // for (int i = 0; i < 30; i++)
-    // {
-    //     xs[i] = temp.x;
-    //     ys[i] = temp.y;
-    //     if (temp.next == NULL)
-    //     {
-    //         return;
-    //     }
-    //     temp = *temp.next;
-    //     // temp.x += 1;
-    // }
-    // insertAtHead(11, 25, xs, ys);
-    // insertAtHead(12, 25, xs, ys);
-    // xs[0] = 10;
-    // ys[0] = 25;
-    // printf("x: %d, y: %d\n", xs[0], ys[0]);
-    // xs[0] = 10;
-    // ys[0] = 25;
-    // printToCoordinates(xs[0], ys[0], "*");
-    // printToCoordinates(xs[1], ys[1], "*");
-    // printToCoordinates(xs[2], ys[2], "*");
-    // printToCoordinates(xs[3], ys[3], "*");
     load(); /* Prints game board */
 }
 
