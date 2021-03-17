@@ -5,25 +5,25 @@
 #include <unistd.h>
 #include "conio/conio.h"
 
-#define UP 0;
-#define DOWN 1;
-#define LEFT 2;
-#define RIGHT 3;
+// #define UP 0;
+// #define DOWN 1;
+// #define LEFT 2;
+// #define RIGHT 3;
 
 void printToCoordinates(int y, int x, char text[])
 {
     printf("\033[%d;%dH%s\n", y, x, text);
 }
 
-struct coordinate
-{
-    int x;
-    int y;
-    int direction;
-};
+// struct coordinate
+// {
+//     int x;
+//     int y;
+//     int direction;
+// };
 
-struct coordinate coordinate;
-struct coordinate snake;
+// struct coordinate coordinate;
+// struct coordinate snake;
 
 struct Node
 {
@@ -31,8 +31,6 @@ struct Node
     int y;
     struct Node *next;
     struct Node *prev;
-    struct Node *head;
-    struct Node *tail;
 };
 struct Node *head; /* Global variable - pointer to head node */
 struct Node *tail; /* Global variable - pointer to tail node */
@@ -44,8 +42,6 @@ struct Node *getNewNode(int x, int y)
     (*newNode).y = y;
     (*newNode).prev = NULL;
     (*newNode).next = NULL;
-    (*newNode).head = NULL;
-    (*newNode).tail = NULL;
     return newNode;
 }
 
@@ -54,43 +50,53 @@ void insertAtHead(int x, int y)
     struct Node *newNode = getNewNode(x, y);
     if (head == NULL && tail == NULL)
     {
-        // struct Node *newNode = getNewNode(5, 5);
         head = newNode;
         tail = newNode;
         return;
     }
-    head->prev = newNode;
-    // tail->next = newNode;
-    (*newNode).next = head;
+    head->next = newNode;
+    (*newNode).prev = head;
     head = newNode;
     (*newNode).x = x;
     (*newNode).y = y;
-
-    struct Node *temp = head;
-    while (temp->prev != NULL)
-    {
-        temp = temp->prev;
-    }
-    tail->next = temp->next;
 }
 
 void pop()
 {
-    tail = tail->prev;
+    tail = tail->next;
+    free(tail->prev);
+    tail->prev = NULL;
 }
 
 void print()
 {
     struct Node *temp = tail;
-    // printf("Forward: ");
     while (temp != NULL)
     {
         printToCoordinates(temp->x, temp->y, "*");
-        // printf("%d ", temp->x);
-        temp = temp->prev;
-        // usleep(200000);
+        temp = temp->next;
     }
-    // printf("\n");
+}
+
+void load()
+{
+    for (int i = 7; i < 75; i++)
+    {
+        printToCoordinates(2, i, "=");
+    }
+    for (int i = 3; i < 20; i++)
+    {
+        printToCoordinates(i, 74, "|");
+    }
+    for (int i = 3; i < 20; i++)
+    {
+        printToCoordinates(i, 7, "|");
+    }
+    for (int i = 7; i < 75; i++)
+    {
+        printToCoordinates(20, i, "=");
+    }
+    printf("\n");
 }
 
 int main()
@@ -112,7 +118,7 @@ int main()
     insertAtHead(10, 29);
     insertAtHead(10, 30);
     char c;
-    int i = 1;
+    // int i = 1;
     while (1)
     {
         struct Node *temp = head;
@@ -154,11 +160,11 @@ int main()
             pop();
             break;
         }
-        i += 1;
-        if (i == 100)
-        {
-            break;
-        }
+        // i += 1;
+        // if (i == 100)
+        // {
+        //     break;
+        // }
         system("clear");
         print();
         load();
@@ -168,25 +174,4 @@ int main()
     }
     sleep(3);
     load(); /* Prints game board */
-}
-
-void load()
-{
-    for (int i = 7; i < 75; i++)
-    {
-        printToCoordinates(2, i, "=");
-    }
-    for (int i = 3; i < 20; i++)
-    {
-        printToCoordinates(i, 74, "|");
-    }
-    for (int i = 3; i < 20; i++)
-    {
-        printToCoordinates(i, 7, "|");
-    }
-    for (int i = 7; i < 75; i++)
-    {
-        printToCoordinates(20, i, "=");
-    }
-    printf("\n");
 }
