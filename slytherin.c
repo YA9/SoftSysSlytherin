@@ -33,7 +33,6 @@ struct Node
     struct Node *prev;
     struct Node *head;
     struct Node *tail;
-    // struct Node *tail;
 };
 struct Node *head; /* Global variable - pointer to head node */
 struct Node *tail; /* Global variable - pointer to tail node */
@@ -60,12 +59,29 @@ void insertAtHead(int x, int y)
         tail = newNode;
         return;
     }
+    // if (tail->next == head)
+    // {
+
+    //     tail->next = newNode;
+    //     newNode->prev = tail;
+    //     return;
+    // }
     head->prev = newNode;
-    tail->next = newNode;
+    // tail->next = newNode;
     (*newNode).next = head;
     head = newNode;
     (*newNode).x = x;
     (*newNode).y = y;
+
+    struct Node *temp = head;
+    while (temp->prev != NULL)
+    {
+        temp = temp->prev;
+    }
+
+    // tail = temp;
+    tail->next = temp->next;
+    // tail->prev = NULL;
 
     // struct Node temp = *newNode;
     // for (int i = 0; i < 30; i++)
@@ -83,7 +99,15 @@ void insertAtHead(int x, int y)
 
 void pop()
 {
-    tail = tail->next;
+    // while (tempy->prev != NULL)
+    // {
+    //     tempy = tempy->prev;
+    // }
+    // // tail = tempy;
+    // tempy->prev = NULL;
+    // tempy = head;
+    tail = tail->prev;
+    // tail->prev = NULL;
 }
 
 void print()
@@ -114,6 +138,9 @@ int main()
     insertAtHead(10, 25);
     insertAtHead(10, 26);
     insertAtHead(10, 27);
+    insertAtHead(10, 28);
+    insertAtHead(10, 29);
+    insertAtHead(10, 30);
     char c;
     int i = 1;
     while (1)
@@ -143,15 +170,19 @@ int main()
         {
         case 'w':
             insertAtHead(temp->x - 1, temp->y);
+            pop();
             break;
         case 'a':
             insertAtHead(temp->x, temp->y - 1);
+            pop();
             break;
         case 's':
             insertAtHead(temp->x + 1, temp->y);
+            pop();
             break;
         case 'd':
             insertAtHead(temp->x, temp->y + 1);
+            pop();
             break;
         }
         i += 1;
@@ -159,7 +190,6 @@ int main()
         {
             break;
         }
-        pop();
         system("clear");
         load();
         print();
@@ -175,7 +205,7 @@ int main()
     // insertAtHead(13, 25);
     // insertAtHead(14, 25);
 
-    print();
+    // print();
 
     // struct Node temp = *newNode;
     // for (int i = 0; i < 30; i++)
