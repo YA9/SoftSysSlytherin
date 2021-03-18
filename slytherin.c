@@ -187,14 +187,6 @@ int main()
             load();
             break;
         }
-        if (selfCollision() == 1)
-        {
-            print();
-            printToCoordinates(21, 37, score);
-            gameOver();
-            load();
-            break;
-        }
         if (c_kbhit() != 0)
         {
             switch (c_getch())
@@ -262,6 +254,14 @@ int main()
             foodx = food_x();
             foody = food_y();
             printToCoordinates(foodx, foody, "+");
+        }
+        if (selfCollision() == 1)
+        {
+            print();
+            printToCoordinates(21, 37, score);
+            gameOver();
+            load();
+            break;
         }
         print();
         load();
