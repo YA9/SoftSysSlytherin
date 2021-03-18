@@ -170,11 +170,11 @@ char gameOver()
 
 int intro()
 {
-    printToCoordinates(7, 35, "SLYTHERIN");
-    printToCoordinates(9, 31, "SELECT DIFFICULTY");
-    printToCoordinates(11, 35, "1 - EASY");
-    printToCoordinates(13, 35, "2 - MEDIUM");
-    printToCoordinates(15, 35, "3 - HARD");
+    printToCoordinates(7, 36, "SLYTHERIN");
+    printToCoordinates(9, 32, "SELECT DIFFICULTY");
+    printToCoordinates(11, 36, "1 - EASY");
+    printToCoordinates(13, 36, "2 - MEDIUM");
+    printToCoordinates(15, 36, "3 - HARD");
     int difficulty;
     load();
     scanf("%d", &difficulty);
