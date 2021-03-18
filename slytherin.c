@@ -29,7 +29,7 @@ void printToCoordinates(int y, int x, char text[])
     printf("\033[%d;%dH%s\n", y, x, text);
 }
 
-struct Node
+struct Node /* Node is defined by the next, prev and its coordinates */
 {
     int x;
     int y;
@@ -49,7 +49,7 @@ struct Node *getNewNode(int x, int y)
     return newNode;
 }
 
-void insertAtHead(int x, int y)
+void insertAtHead(int x, int y) /* Inserts head to the snake at 'x' and 'y' positions */
 {
     struct Node *newNode = getNewNode(x, y);
     if (head == NULL && tail == NULL)
@@ -65,14 +65,14 @@ void insertAtHead(int x, int y)
     (*newNode).y = y;
 }
 
-void pop()
+void pop() /* Pops snake's tail (occurs at each frame) */
 {
     tail = tail->next;
-    free(tail->prev);
+    free(tail->prev); /* Frees the unused tail from memory */
     tail->prev = NULL;
 }
 
-void deleteSnake()
+void deleteSnake() /* Runs pop on the entire snake then clears the head and tail. Used at game over when player is given the option to restart. */
 {
     struct Node *temp = head;
     while (temp->prev != NULL)
@@ -83,7 +83,7 @@ void deleteSnake()
     tail = NULL;
 }
 
-void print()
+void print() /* Iterates through the nodes of the snake and prints at their x and y positions. */
 {
     struct Node *temp = tail;
     while (temp != NULL)
@@ -93,7 +93,7 @@ void print()
     }
 }
 
-void load()
+void load() /* Generates Game's frame. */
 {
     for (int i = 7; i < 75; i++)
     {
@@ -114,41 +114,19 @@ void load()
     printf("\n");
 }
 
-int food_x()
+int food_x() /* Generates a food at the x coordinate */
 {
     int x = (rand() % (19 - 3 + 1)) + 3;
-    struct Node *tempx = head;
-    while (tempx != NULL)
-    {
-        if (tempx->x == x)
-        {
-            // usleep(100);
-            int x = (rand() % (19 - 3 + 1)) + 3;
-            struct Node *tempx = head;
-        }
-        tempx = tempx->prev;
-    }
     return x;
 }
 
-int food_y()
+int food_y() /* Generates a food at the y coordinate */
 {
     int y = (rand() % (72 - 8 + 1)) + 8;
-    struct Node *tempy = head;
-    while (tempy != NULL)
-    {
-        if (tempy->y == y)
-        {
-            // usleep(100);
-            int y = (rand() % (19 - 3 + 1)) + 3;
-            struct Node *tempy = head;
-        }
-        tempy = tempy->prev;
-    }
     return y;
 }
 
-int selfCollision()
+int selfCollision() /* Returns 1 if the snake collides with itself, 0 otherwise. */
 {
     struct Node *temp = head;
     int x = temp->x;
@@ -164,7 +142,7 @@ int selfCollision()
     return 0;
 }
 
-char gameOver()
+char gameOver() /* Provides a Game Over screen and returns 'y' or 'n'. */
 {
     char choice;
     printToCoordinates(11, 37, "GAME OVER");
@@ -173,7 +151,7 @@ char gameOver()
     return choice;
 }
 
-int intro()
+int intro() /* Intro screen, returns difficulty selected by player. */
 {
     printToCoordinates(7, 36, "SLYTHERIN");
     printToCoordinates(9, 32, "SELECT DIFFICULTY");
@@ -326,6 +304,19 @@ int main()
             }
             foodx = food_x();
             foody = food_y();
+
+            struct Node *tempFood = head;
+            while (tempFood != NULL)
+            {
+                if (tempFood->x == foodx && tempFood->y == foody)
+                {
+                    // usleep(100);
+                    foodx = food_x();
+                    foody = food_y();
+                    struct Node *tempFood = head;
+                }
+                tempFood = tempFood->prev;
+            }
             printToCoordinates(foodx, foody, "+");
         }
         if (selfCollision() == 1)
