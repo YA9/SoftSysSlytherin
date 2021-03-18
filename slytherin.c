@@ -5,25 +5,10 @@
 #include <unistd.h>
 #include "conio/conio.h"
 
-// #define UP 0;
-// #define DOWN 1;
-// #define LEFT 2;
-// #define RIGHT 3;
-
 void printToCoordinates(int y, int x, char text[])
 {
     printf("\033[%d;%dH%s\n", y, x, text);
 }
-
-// struct coordinate
-// {
-//     int x;
-//     int y;
-//     int direction;
-// };
-
-// struct coordinate coordinate;
-// struct coordinate snake;
 
 struct Node
 {
@@ -115,6 +100,7 @@ int main()
 {
     srand(time(NULL));
     int length;
+    int speed = 200000;
     int foodx = food_x();
     int foody = food_y();
     char score[20];
@@ -176,6 +162,10 @@ int main()
         }
         else
         {
+            if (speed > 25000)
+            {
+                speed -= 10000; /* Increases snake speed at each bite */
+            }
             length += 1;
             switch (c)
             {
@@ -202,7 +192,6 @@ int main()
         sprintf(score, "Score: %d", length);
         // sprintf(score, "x: %d, y: %d", foodx, foody);
         printToCoordinates(21, 37, score);
-
-        usleep(200000);
+        usleep(speed);
     }
 }
