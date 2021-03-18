@@ -4,6 +4,8 @@ Slytherin is an implementation of the classic snake game.
 Resources used:
 https://gist.github.com/mycodeschool/7429492
 https://github.com/zoelabbb/conio.h
+
+command to run: gcc slytherin.c conio/conio.c -o slytherin && ./slytherin
 */
 
 #include <stdio.h>
@@ -131,7 +133,7 @@ int intro()
     printToCoordinates(9, 31, "SELECT DIFFICULTY");
     printToCoordinates(11, 35, "1 - EASY");
     printToCoordinates(13, 35, "2 - MEDIUM");
-    printToCoordinates(15, 35, "1 - HARD");
+    printToCoordinates(15, 35, "3 - HARD");
     int difficulty;
     load();
     scanf("%d", &difficulty);
@@ -185,14 +187,14 @@ int main()
             load();
             break;
         }
-        if (selfCollision() == 1)
-        {
-            print();
-            printToCoordinates(21, 37, score);
-            gameOver();
-            load();
-            break;
-        }
+        // if (selfCollision() == 1)
+        // {
+        //     print();
+        //     printToCoordinates(21, 37, score);
+        //     gameOver();
+        //     load();
+        //     break;
+        // }
         if (c_kbhit() != 0)
         {
             switch (c_getch())
