@@ -99,32 +99,41 @@ void load()
     printf("\n");
 }
 
+int food_x()
+{
+    int x = (rand() % (19 - 3 + 1)) + 3;
+    return x;
+}
+
+int food_y()
+{
+    int y = (rand() % (72 - 8 + 1)) + 8;
+    return y;
+}
+
 int main()
 {
+    srand(time(NULL));
     int length;
+    int foodx = food_x();
+    int foody = food_y();
     char score[20];
     system("clear"); /* Clears the terminal */
     length = 0;
-    // head.x = 25;
-    // head.y = 10;
-    // int xs[30];
-    // int ys[30];
-    // printf("x: %d, y: %d\n\n", xs[0], ys[0]);
-    // struct Node *newNode = getNewNode(10, 25);
     insertAtHead(10, 25);
     insertAtHead(10, 26);
     insertAtHead(10, 27);
     insertAtHead(10, 28);
     insertAtHead(10, 29);
     insertAtHead(10, 30);
+    printToCoordinates(foodx, foody, "+");
     char c;
-    // int i = 1;
     while (1)
     {
+        system("clear");
         struct Node *temp = head;
         if (c_kbhit() != 0)
         {
-            // printf("click: %c", c_getch());
             switch (c_getch())
             {
             case 'w':
@@ -160,18 +169,40 @@ int main()
             pop();
             break;
         }
-        // i += 1;
-        // if (i == 100)
-        // {
-        //     break;
-        // }
-        system("clear");
+
+        if ((temp->x != foodx) || (temp->y != foody))
+        {
+            printToCoordinates(foodx, foody, "+");
+        }
+        else
+        {
+            length += 1;
+            switch (c)
+            {
+            case 'w':
+                insertAtHead(temp->x - 1, temp->y);
+                break;
+            case 'a':
+                insertAtHead(temp->x, temp->y - 1);
+                break;
+            case 's':
+                insertAtHead(temp->x + 1, temp->y);
+                break;
+            case 'd':
+                insertAtHead(temp->x, temp->y + 1);
+                break;
+            }
+            foodx = food_x();
+            foody = food_y();
+            printToCoordinates(foodx, foody, "+");
+        }
+
         print();
         load();
         sprintf(score, "Score: %d", length);
+        // sprintf(score, "x: %d, y: %d", foodx, foody);
         printToCoordinates(21, 37, score);
+
         usleep(200000);
     }
-    sleep(3);
-    load(); /* Prints game board */
 }
