@@ -192,18 +192,41 @@ int main()
     {
         system("clear");
         struct Node *temp = head;
-        if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
+        if (difficulty == 2 || difficulty == 3)
         {
-            print();
-            printToCoordinates(21, 37, score);
-            load();
-            if (gameOver() == 'y')
+            if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
             {
-                deleteSnake();
-                main();
+                print();
+                printToCoordinates(21, 37, score);
+                load();
+                if (gameOver() == 'y')
+                {
+                    deleteSnake();
+                    main();
+                }
+                printToCoordinates(21, 37, score);
+                break;
             }
-            printToCoordinates(21, 37, score);
-            break;
+        }
+        else if (difficulty == 1)
+        {
+            // if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
+            if (temp->x < 3)
+            {
+                temp->x = 20;
+            }
+            else if (temp->x > 19)
+            {
+                temp->x = 2;
+            }
+            else if (temp->y < 8)
+            {
+                temp->y = 73;
+            }
+            else if (temp->y > 72)
+            {
+                temp->y = 7;
+            }
         }
         if (c_kbhit() != 0)
         {
