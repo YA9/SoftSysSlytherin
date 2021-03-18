@@ -10,6 +10,11 @@ command to run: gcc slytherin.c conio/conio.c -o slytherin && ./slytherin
 Notes:
 - Game has three modes, the higher the difficulty, the faster the snake gets at each food consumed and the higher max speed it has. 
 - In easy mode, the snake can pass through walls, whereas in medium and hard modes, the walls kill the snake.
+
+Instructions:
+- Select difficulty and press enter.
+- Controls are 'w' 'a' 's' 'd'.
+- Snake starts moving in the right direction, so moving backwards kills it.
 */
 
 #include <stdio.h>
