@@ -112,34 +112,34 @@ void load()
 int food_x()
 {
     int x = (rand() % (19 - 3 + 1)) + 3;
-    // struct Node *tempx = head;
-    // while (tempx != NULL)
-    // {
-    //     if (tempx->x == x)
-    //     {
-    //         usleep(100);
-    //         int x = (rand() % (19 - 3 + 1)) + 3;
-    //         tempx = head;
-    //     }
-    //     tempx = tempx->prev;
-    // }
+    struct Node *tempx = head;
+    while (tempx != NULL)
+    {
+        if (tempx->x == x)
+        {
+            // usleep(100);
+            int x = (rand() % (19 - 3 + 1)) + 3;
+            struct Node *tempx = head;
+        }
+        tempx = tempx->prev;
+    }
     return x;
 }
 
 int food_y()
 {
     int y = (rand() % (72 - 8 + 1)) + 8;
-    // struct Node *tempy = head;
-    // while (tempy != NULL)
-    // {
-    //     if (tempy->y == y)
-    //     {
-    //         usleep(100);
-    //         int y = (rand() % (19 - 3 + 1)) + 3;
-    //         tempy = head;
-    //     }
-    //     tempy = tempy->prev;
-    // }
+    struct Node *tempy = head;
+    while (tempy != NULL)
+    {
+        if (tempy->y == y)
+        {
+            // usleep(100);
+            int y = (rand() % (19 - 3 + 1)) + 3;
+            struct Node *tempy = head;
+        }
+        tempy = tempy->prev;
+    }
     return y;
 }
 
