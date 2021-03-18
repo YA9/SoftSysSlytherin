@@ -6,6 +6,10 @@ https://gist.github.com/mycodeschool/7429492
 https://github.com/zoelabbb/conio.h
 
 command to run: gcc slytherin.c conio/conio.c -o slytherin && ./slytherin
+
+Notes:
+- Game has three modes, the higher the difficulty, the faster the snake gets at each food consumed and the higher max speed it has. 
+- In easy mode, the snake can pass through walls, whereas in medium and hard modes, the walls kill the snake.
 */
 
 #include <stdio.h>
@@ -210,7 +214,6 @@ int main()
         }
         else if (difficulty == 1)
         {
-            // if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
             if (temp->x < 3)
             {
                 temp->x = 20;
