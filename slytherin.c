@@ -1,3 +1,11 @@
+/* Author: Yehya Albakri
+Slytherin is an implementation of the classic snake game.
+
+Resources used:
+https://gist.github.com/mycodeschool/7429492
+https://github.com/zoelabbb/conio.h
+*/
+
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
@@ -96,6 +104,22 @@ int food_y()
     return y;
 }
 
+int selfCollision()
+{
+    struct Node *temp = head;
+    int x = temp->x;
+    int y = temp->y;
+    while (temp->prev != NULL)
+    {
+        temp = temp->prev;
+        if (temp->x == x && temp->y == y)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
 void gameOver()
 {
     printToCoordinates(11, 37, "GAME OVER");
@@ -155,10 +179,18 @@ int main()
         struct Node *temp = head;
         if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
         {
-            gameOver();
             print();
-            load();
             printToCoordinates(21, 37, score);
+            gameOver();
+            load();
+            break;
+        }
+        if (selfCollision() == 1)
+        {
+            print();
+            printToCoordinates(21, 37, score);
+            gameOver();
+            load();
             break;
         }
         if (c_kbhit() != 0)
@@ -233,7 +265,6 @@ int main()
         print();
         load();
         sprintf(score, "Score: %d", length);
-        // sprintf(score, "x: %d, y: %d", foodx, foody);
         printToCoordinates(21, 37, score);
         usleep(speed);
     }
