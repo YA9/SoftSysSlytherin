@@ -187,14 +187,14 @@ int main()
             load();
             break;
         }
-        // if (selfCollision() == 1)
-        // {
-        //     print();
-        //     printToCoordinates(21, 37, score);
-        //     gameOver();
-        //     load();
-        //     break;
-        // }
+        if (selfCollision() == 1)
+        {
+            print();
+            printToCoordinates(21, 37, score);
+            gameOver();
+            load();
+            break;
+        }
         if (c_kbhit() != 0)
         {
             switch (c_getch())
@@ -247,23 +247,22 @@ int main()
             switch (c)
             {
             case 'w':
-                insertAtHead(temp->x - 1, temp->y);
+                insertAtHead(temp->x - 2, temp->y);
                 break;
             case 'a':
-                insertAtHead(temp->x, temp->y - 1);
+                insertAtHead(temp->x, temp->y - 2);
                 break;
             case 's':
-                insertAtHead(temp->x + 1, temp->y);
+                insertAtHead(temp->x + 2, temp->y);
                 break;
             case 'd':
-                insertAtHead(temp->x, temp->y + 1);
+                insertAtHead(temp->x, temp->y + 2);
                 break;
             }
             foodx = food_x();
             foody = food_y();
             printToCoordinates(foodx, foody, "+");
         }
-
         print();
         load();
         sprintf(score, "Score: %d", length);
