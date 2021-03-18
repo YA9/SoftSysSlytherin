@@ -74,6 +74,8 @@ void deleteSnake()
     {
         pop();
     }
+    head = NULL;
+    tail = NULL;
 }
 
 void print()
