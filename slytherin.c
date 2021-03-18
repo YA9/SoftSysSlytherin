@@ -63,6 +63,15 @@ void pop()
     tail->prev = NULL;
 }
 
+void deleteSnake()
+{
+    struct Node *temp = head;
+    while (temp->prev != NULL)
+    {
+        pop();
+    }
+}
+
 void print()
 {
     struct Node *temp = tail;
@@ -122,9 +131,13 @@ int selfCollision()
     return 0;
 }
 
-void gameOver()
+char gameOver()
 {
+    char choice;
     printToCoordinates(11, 37, "GAME OVER");
+    printToCoordinates(13, 35, "RESTART? y / n");
+    scanf("%c", &choice);
+    return choice;
 }
 
 int intro()
@@ -183,8 +196,13 @@ int main()
         {
             print();
             printToCoordinates(21, 37, score);
-            gameOver();
             load();
+            if (gameOver() == 'y')
+            {
+                deleteSnake();
+                main();
+            }
+            printToCoordinates(21, 37, score);
             break;
         }
         if (c_kbhit() != 0)
@@ -259,8 +277,14 @@ int main()
         {
             print();
             printToCoordinates(21, 37, score);
-            gameOver();
             load();
+            if (gameOver() == 'y')
+            {
+                deleteSnake();
+                main();
+            }
+
+            printToCoordinates(21, 37, score);
             break;
         }
         print();
