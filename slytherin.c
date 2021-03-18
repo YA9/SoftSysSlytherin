@@ -96,28 +96,71 @@ int food_y()
     return y;
 }
 
+void gameOver()
+{
+    printToCoordinates(11, 37, "GAME OVER");
+}
+
+int intro()
+{
+    printToCoordinates(7, 35, "SLYTHERIN");
+    printToCoordinates(9, 31, "SELECT DIFFICULTY");
+    printToCoordinates(11, 35, "1 - EASY");
+    printToCoordinates(13, 35, "2 - MEDIUM");
+    printToCoordinates(15, 35, "1 - HARD");
+    int difficulty;
+    load();
+    scanf("%d", &difficulty);
+    return difficulty;
+}
+
 int main()
 {
     srand(time(NULL));
     int length;
+    int difficulty;
     int speed = 200000;
+    int speed_decrement;
+    int max_speed_delay;
     int foodx = food_x();
     int foody = food_y();
     char score[20];
     system("clear"); /* Clears the terminal */
     length = 0;
-    insertAtHead(10, 25);
-    insertAtHead(10, 26);
-    insertAtHead(10, 27);
-    insertAtHead(10, 28);
-    insertAtHead(10, 29);
-    insertAtHead(10, 30);
+    difficulty = intro();
+    switch (difficulty)
+    {
+    case 1:
+        speed_decrement = 100;
+        max_speed_delay = 150000;
+        break;
+    case 2:
+        speed_decrement = 1000;
+        max_speed_delay = 75000;
+        break;
+    case 3:
+        speed_decrement = 1000;
+        max_speed_delay = 25000;
+    }
+    insertAtHead(11, 38);
+    insertAtHead(11, 39);
+    insertAtHead(11, 40);
+    insertAtHead(11, 41);
+    insertAtHead(11, 42);
     printToCoordinates(foodx, foody, "+");
     char c;
     while (1)
     {
         system("clear");
         struct Node *temp = head;
+        if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
+        {
+            gameOver();
+            print();
+            load();
+            printToCoordinates(21, 37, score);
+            break;
+        }
         if (c_kbhit() != 0)
         {
             switch (c_getch())
@@ -162,9 +205,9 @@ int main()
         }
         else
         {
-            if (speed > 25000)
+            if (speed > max_speed_delay)
             {
-                speed -= 10000; /* Increases snake speed at each bite */
+                speed -= speed_decrement; /* Increases snake speed at each bite */
             }
             length += 1;
             switch (c)
