@@ -178,7 +178,7 @@ int main()
     system("clear"); /* Clears the terminal */
     length = 0;
     difficulty = intro();
-    switch (difficulty)
+    switch (difficulty) /* Sets game difficulty by max speed and snake acceleration over score. */
     {
     case 1:
         speed_decrement = 100;
@@ -192,18 +192,18 @@ int main()
         speed_decrement = 1000;
         max_speed_delay = 25000;
     }
-    insertAtHead(11, 38);
+    insertAtHead(11, 38); /* Creates starting snake. */
     insertAtHead(11, 39);
     insertAtHead(11, 40);
     insertAtHead(11, 41);
     insertAtHead(11, 42);
-    printToCoordinates(foodx, foody, "+");
-    char c;
+    printToCoordinates(foodx, foody, "+"); /* Creates starting food */
+    char c;                                /* Variable storing most recently pressed key. */
     while (1)
     {
-        system("clear");
+        system("clear"); /* Clears board at each frame. */
         struct Node *temp = head;
-        if (difficulty == 2 || difficulty == 3)
+        if (difficulty == 2 || difficulty == 3) /* On difficulties 2 and 3, walls kill the snake. */
         {
             if (temp->x < 3 || temp->x > 19 || temp->y > 72 || temp->y < 8)
             {
@@ -219,7 +219,7 @@ int main()
                 break;
             }
         }
-        else if (difficulty == 1)
+        else if (difficulty == 1) /* On difficlty 1, snake can pass through walls. */
         {
             if (temp->x < 3)
             {
@@ -238,7 +238,7 @@ int main()
                 temp->y = 8;
             }
         }
-        if (c_kbhit() != 0)
+        if (c_kbhit() != 0) /* If key is pressed, updates 'c' with the key. */
         {
             switch (c_getch())
             {
@@ -256,7 +256,7 @@ int main()
                 break;
             }
         }
-        switch (c)
+        switch (c) /* Depending on the most recent direction of the snake, snake inserts head in that direction and pops the tail. This makes the snake move at each frame. */
         {
         case 'w':
             insertAtHead(temp->x - 1, temp->y);
@@ -276,11 +276,11 @@ int main()
             break;
         }
 
-        if ((temp->x != foodx) || (temp->y != foody))
+        if ((temp->x != foodx) || (temp->y != foody)) /* Prints new food at same place in each new frame. */
         {
             printToCoordinates(foodx, foody, "+");
         }
-        else
+        else /* If snake eats food, adds the food as head to the snake, generates new food, and increases snake speed. */
         {
             if (speed > max_speed_delay)
             {
@@ -306,7 +306,7 @@ int main()
             foody = food_y();
 
             struct Node *tempFood = head;
-            while (tempFood != NULL)
+            while (tempFood != NULL) /* Makes sure no food is generates inside the snake. */
             {
                 if (tempFood->x == foodx && tempFood->y == foody)
                 {
@@ -319,7 +319,7 @@ int main()
             }
             printToCoordinates(foodx, foody, "+");
         }
-        if (selfCollision() == 1)
+        if (selfCollision() == 1) /* Makes Game Over if snake collides with itself. */
         {
             print();
             printToCoordinates(21, 37, score);
@@ -333,10 +333,10 @@ int main()
             printToCoordinates(21, 37, score);
             break;
         }
-        print();
+        print(); /* Prints the current snake at each frame. */
         load();
-        sprintf(score, "Score: %d", length);
+        sprintf(score, "Score: %d", length); /* Prints the score at the bottom of the game. */
         printToCoordinates(21, 37, score);
-        usleep(speed);
+        usleep(speed); /* Controls the time delay between frames. */
     }
 }
