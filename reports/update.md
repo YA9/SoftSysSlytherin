@@ -11,4 +11,5 @@ So far, I have completed the minimum viable product for the game with some addit
 Currently, I am working on adding a play / pause feature to the game. In the game, it is also possible to move backward, but since the snake would go inside itself, it dies. I would like to make the snake unable to go backward on itself. I would also like to add a distinction between the head and the tail of the snake because in playing the first time, the player has no idea what direction the snake starts in. The definition of done is presenting each of these tasks in the final product.
 
 Trello: https://trello.com/b/mGpR0Gtn/slytherin
+
 GitHub: https://github.com/YA9/SoftSysSlytherin
