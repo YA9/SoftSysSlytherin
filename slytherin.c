@@ -204,7 +204,7 @@ int main()
     insertAtHead(11, 41);
     insertAtHead(11, 42);
     printToCoordinates(foodx, foody, "+"); /* Creates starting food */
-    char c;                                /* Variable storing most recently pressed key. */
+    char c = 'o';                          /* Variable storing most recently pressed key. */
     while (1)
     {
         system("clear"); /* Clears board at each frame. */
@@ -249,16 +249,28 @@ int main()
             switch (c_getch())
             {
             case 'w':
-                c = 'w';
+                if (c != 's')
+                {
+                    c = 'w';
+                }
                 break;
             case 'a':
-                c = 'a';
+                if (c != 'd' && c != 'o')
+                {
+                    c = 'a';
+                }
                 break;
             case 's':
-                c = 's';
+                if (c != 'w')
+                {
+                    c = 's';
+                }
                 break;
             case 'd':
-                c = 'd';
+                if (c != 'a')
+                {
+                    c = 'd';
+                }
                 break;
             case 'p':
                 c = 'p';
