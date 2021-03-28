@@ -255,7 +255,7 @@ int main()
                 }
                 break;
             case 'a':
-                if (c != 'd' && c != 'o')
+                if (c != 'd' && c != 'o' && c != 'p')
                 {
                     c = 'a';
                 }
