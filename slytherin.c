@@ -14,7 +14,7 @@ Notes:
 Instructions:
 - Select difficulty and press enter.
 - Controls are 'w' 'a' 's' 'd'.
-- Press 'P' to pause and resume the game.
+- Press 'p' to pause the game.
 - Snake starts moving in the right direction, so moving backwards kills it.
 */
 
