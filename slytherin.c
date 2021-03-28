@@ -14,6 +14,7 @@ Notes:
 Instructions:
 - Select difficulty and press enter.
 - Controls are 'w' 'a' 's' 'd'.
+- Press 'P' to pause and resume the game.
 - Snake starts moving in the right direction, so moving backwards kills it.
 */
 
@@ -85,11 +86,15 @@ void deleteSnake() /* Runs pop on the entire snake then clears the head and tail
 
 void print() /* Iterates through the nodes of the snake and prints at their x and y positions. */
 {
-    struct Node *temp = tail;
+    struct Node *temp = head;
+
+    /* Following two lines change the head character of the snake. */
+    // printToCoordinates(temp->x, temp->y, "+");
+    // temp = temp->prev;
     while (temp != NULL)
     {
         printToCoordinates(temp->x, temp->y, "*");
-        temp = temp->next;
+        temp = temp->prev;
     }
 }
 
@@ -175,6 +180,7 @@ int main()
     int foodx = food_x();
     int foody = food_y();
     char score[20];
+    char pause;
     system("clear"); /* Clears the terminal */
     length = 0;
     difficulty = intro();
@@ -254,6 +260,8 @@ int main()
             case 'd':
                 c = 'd';
                 break;
+            case 'p':
+                c = 'p';
             }
         }
         switch (c) /* Depending on the most recent direction of the snake, snake inserts head in that direction and pops the tail. This makes the snake move at each frame. */
@@ -274,6 +282,9 @@ int main()
             insertAtHead(temp->x, temp->y + 1);
             pop();
             break;
+        case 'p':
+            printToCoordinates(0, 36, "GAME PAUSED");
+            printToCoordinates(22, 24, "PRESS 'w', 'a', 's', 'd' TO RESUME");
         }
 
         if ((temp->x != foodx) || (temp->y != foody)) /* Prints new food at same place in each new frame. */
